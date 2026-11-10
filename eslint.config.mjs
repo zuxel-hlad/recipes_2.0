@@ -1,6 +1,7 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -13,6 +14,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // Must be last: turns off ESLint rules that conflict with Prettier.
+  skipFormatting,
 ]);
 
 export default eslintConfig;
