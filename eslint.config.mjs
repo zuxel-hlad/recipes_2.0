@@ -6,6 +6,12 @@ import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    // src/i18n/messages.ts uses an anonymous default export.
+    rules: {
+      "import/no-anonymous-default-export": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

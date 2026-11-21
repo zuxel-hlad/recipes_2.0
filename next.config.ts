@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
@@ -17,5 +17,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [new URL("https://cdn.dummyjson.com/**")],
   },
 };
+const withNextIntl = createNextIntlPlugin("./src/shared/i18n/request.ts");
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

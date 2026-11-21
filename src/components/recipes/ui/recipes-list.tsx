@@ -1,11 +1,14 @@
 import { Recipe } from "@/components/recipes/types";
 import { RecipeCard } from "@/components/recipes/ui/recipe-card";
-import { cn } from "cn";
+import { cn } from "@/shared/lib/utils";
+import { useTranslations } from "next-intl";
 
 type RecipesListProps = React.ComponentProps<"div">;
 
 export default function RecipesList({ className, ...props }: RecipesListProps): React.ReactNode {
+  const t = useTranslations();
   const recipes: Recipe[] = [];
+
   return (
     <div
       className={cn(className, {
@@ -21,7 +24,7 @@ export default function RecipesList({ className, ...props }: RecipesListProps): 
           />
         ))
       ) : (
-        <span className="block text-center text-base font-medium text-slate-600">No recipes found</span>
+        <span className="block text-center text-base font-medium text-slate-600">{t("recipes.notFound")}</span>
       )}
     </div>
   );
