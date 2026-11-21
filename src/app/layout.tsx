@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { Suspense } from "react";
 import Header from "@/components/layout/header/header";
 import Footer from "@/components/layout/footer/footer";
 import { NextIntlClientProvider } from "next-intl";
+import { QueryProvider } from "@/providers/query-provider";
 import "./globals.css";
 
 const robotoFont = Roboto({
@@ -18,17 +20,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <NextIntlClientProvider>
-      <html
-        lang="en"
-        className={`${robotoFont.variable} h-full antialiased`}
-      >
-        <body className="flex min-h-dvh flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </body>
-      </html>
-    </NextIntlClientProvider>
+    <html
+      lang="en"
+      className={`${robotoFont.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-dvh flex-col">
+        <Suspense>
+          <NextIntlClientProvider>
+            <QueryProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </QueryProvider>
+          </NextIntlClientProvider>
+        </Suspense>
+      </body>
+    </html>
   );
 }

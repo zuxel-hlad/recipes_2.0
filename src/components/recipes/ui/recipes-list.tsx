@@ -1,4 +1,6 @@
-import { Recipe } from "@/components/recipes/types";
+"use client";
+
+import { useRecipes } from "@/components/recipes/hooks/use-recipes";
 import { RecipeCard } from "@/components/recipes/ui/recipe-card";
 import { cn } from "@/shared/lib/utils";
 import { useTranslations } from "next-intl";
@@ -7,7 +9,7 @@ type RecipesListProps = React.ComponentProps<"div">;
 
 export default function RecipesList({ className, ...props }: RecipesListProps): React.ReactNode {
   const t = useTranslations();
-  const recipes: Recipe[] = [];
+  const { data: recipes = [] } = useRecipes();
 
   return (
     <div
