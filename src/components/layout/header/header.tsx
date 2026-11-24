@@ -1,4 +1,4 @@
-import { NavigationMenu } from "@/components/ui/navigation-menu";
+import { NavigationMenu } from "@/shared/ui/shadcn/navigation-menu";
 import { useTranslations } from "next-intl";
 
 export default function Header(): React.ReactNode {

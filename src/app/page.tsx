@@ -1,13 +1,24 @@
 import { Suspense } from "react";
 import HomeInfo from "@/components/page-sections/home/page-info";
-import RecipesSection from "@/components/recipes/ui/recipes-section";
+import RecipesContainer from "@/components/recipes/ui/recipes-container";
+import { SearchParams, createLoader } from "nuqs/server";
+import { pageParser } from "@/components/recipes/utils";
+import { RecipesListSkeleton } from "@/components/recipes/ui/recipes-list-skeleton";
 
-export default function HomePage() {
+const paramsLoader = createLoader({ page: pageParser });
+
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<React.ReactNode> {
+  const { page } = await paramsLoader(searchParams);
+
   return (
     <div className="container mx-auto px-3 py-1.5">
       <HomeInfo />
-      <Suspense fallback={<div className="h-64 animate-pulse rounded-xl bg-slate-100" />}>
-        <RecipesSection />
+      <Suspense fallback={<RecipesListSkeleton />}>
+        <RecipesContainer page={page} />
       </Suspense>
     </div>
   );

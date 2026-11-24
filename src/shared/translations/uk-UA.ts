@@ -14,4 +14,8 @@ export default {
     developedBy: "Розробка та дизайн — Станіслав.",
     allRightsReserved: "Усі права захищено",
   },
+  actions: {
+    next: "Далі",
+    prev: "Назад",
+  },
 };

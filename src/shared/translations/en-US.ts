@@ -14,4 +14,8 @@ export default {
     developedBy: "Developed and designed by Stanislav",
     allRightsReserved: "All rights reserved",
   },
+  actions: {
+    next: "Next",
+    prev: "Prev",
+  },
 };
