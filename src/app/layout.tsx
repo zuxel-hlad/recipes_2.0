@@ -5,6 +5,7 @@ import Header from "@/components/layout/header/header";
 import Footer from "@/components/layout/footer/footer";
 import { NextIntlClientProvider } from "next-intl";
 import { QueryProvider } from "@/providers/query-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
 const robotoFont = Roboto({
@@ -28,9 +29,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Suspense>
           <NextIntlClientProvider>
             <QueryProvider>
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
+              <NuqsAdapter>
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </NuqsAdapter>
             </QueryProvider>
           </NextIntlClientProvider>
         </Suspense>

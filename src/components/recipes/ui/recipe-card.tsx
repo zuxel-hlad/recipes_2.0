@@ -1,19 +1,22 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LoaderIcon } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/shared/ui/shadcn/badge";
+import { Button } from "@/shared/ui/shadcn/button";
+import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "@/shared/ui/shadcn/card";
 import { DIFFICULTY_COLORS, MAX_VISIBLE_TAGS, POPULAR_REVIEW_THRESHOLD } from "@/components/recipes/constants";
 import type { Recipe } from "@/components/recipes/types";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 export type RecipeCardProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
   recipe: Recipe;
 };
 
 export function RecipeCard({ recipe, className, ...props }: RecipeCardProps) {
+  const [isImageReady, setImageReady] = useState<boolean>(false);
   const t = useTranslations();
+
   const isPopular = recipe.reviewCount >= POPULAR_REVIEW_THRESHOLD;
   const visibleTags = recipe.tags.slice(0, MAX_VISIBLE_TAGS);
   const hiddenTagsCount = recipe.tags.length - visibleTags.length;
@@ -28,13 +31,24 @@ export function RecipeCard({ recipe, className, ...props }: RecipeCardProps) {
       )}
 
       <div className="relative mx-4 h-56 overflow-hidden rounded-xl">
+        {!isImageReady && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/45">
+            <LoaderIcon
+              className="animate-spin text-white"
+              role="status"
+            />
+          </div>
+        )}
+
         <Image
+          fill
           src={recipe.image}
           alt={recipe.name}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover"
           loading="eager"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className={cn("object-cover", { "opacity-0": !isImageReady })}
+          onError={() => setImageReady(true)}
+          onLoad={() => setImageReady(true)}
         />
       </div>
 
