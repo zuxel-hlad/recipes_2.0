@@ -19,6 +19,11 @@ export interface Recipe {
   mealType: string[];
 }
 
+export interface RecipesRequest {
+  page: number;
+  q?: string;
+}
+
 export interface RecipesResponse {
   recipes: Recipe[];
   total: number;

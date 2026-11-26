@@ -17,5 +17,7 @@ export default {
   actions: {
     next: "Next",
     prev: "Prev",
+    search: "Search",
+    clear: "Clear",
   },
 };

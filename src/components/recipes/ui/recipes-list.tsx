@@ -4,6 +4,7 @@ import { useRecipes } from "@/components/recipes/hooks/use-recipes";
 import { RecipeCard } from "@/components/recipes/ui/recipe-card";
 import { useTranslations } from "next-intl";
 import { BasePagination } from "@/shared/ui/base-pagination";
+import { BaseSearch } from "@/shared/ui/base-search";
 import { cn } from "@/shared/lib/utils";
 import { RecipesListSkeleton } from "@/components/recipes/ui/recipes-list-skeleton";
 
@@ -12,10 +13,17 @@ type RecipesListProps = React.ComponentProps<"div">;
 export default function RecipesList({ className, ...props }: RecipesListProps): React.ReactNode {
   const t = useTranslations();
 
-  const { recipes, totalPages, setPage, page, isRecipesLoading } = useRecipes();
+  const { recipes, totalPages, setPage, page, isRecipesLoading, searchQuery, setSearchQuery, isSearching } =
+    useRecipes();
 
   return (
     <>
+      <BaseSearch
+        className="mb-4"
+        label={t("actions.search")}
+        query={searchQuery}
+        setQuery={setSearchQuery}
+      />
       {isRecipesLoading ? (
         <RecipesListSkeleton />
       ) : (
@@ -38,11 +46,13 @@ export default function RecipesList({ className, ...props }: RecipesListProps): 
         </div>
       )}
 
-      <BasePagination
-        page={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-      />
+      {!isSearching && totalPages > 1 && (
+        <BasePagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
+      )}
     </>
   );
 }
