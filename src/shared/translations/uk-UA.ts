@@ -17,5 +17,7 @@ export default {
   actions: {
     next: "Далі",
     prev: "Назад",
+    search: "Пошук",
+    clear: "Очистити",
   },
 };
